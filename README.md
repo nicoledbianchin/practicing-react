@@ -1,3 +1,4 @@
 # practicing-react
-CS50 Beyond tutorial
+
+CS50 Beyond tutorial exercises 
 
