@@ -48,7 +48,7 @@
                 }
             }
 
-            render(){
+            renderProblem() {
                 return(
                     <div>
                         <h1>{this.state.number1} + {this.state.number2}</h1>
@@ -58,6 +58,18 @@
                         </div>
                     </div>
                 );
+            }
+
+            renderWin()  {
+                return (<h1>Congratulations, you win!</h1>)
+            }
+
+            render() {
+                if (this.state.score >= 10){
+                    return this.renderWin();
+                } else {
+                    return this.renderProblem();
+                }
             }
         }
 
