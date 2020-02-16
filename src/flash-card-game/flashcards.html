@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <title>Flashcards</title>
+        <style>
+            *{
+                text-align: center;
+            }
+            body {
+                background: lightgray;
+                font-family: sans-serif;
+            }
+            button {
+                border-style: solid;
+                border-color: black;
+            }
+        </style>
+    </header>
+    <body>
+        <div id="app">
+        </div>
+
+        <script type="text/babel">
+        
+        class CardEditor extends React.Component{
+
+            render() {
+                return (
+                    <div>
+                        This is the editor
+                        <hr/>
+                        <button onClick={this.props.switchMode}>Go to viewer</button>
+                    </div>
+                );
+            }
+        }
+
+        class CardViewer extends React.Component{
+            
+            render() {
+                return (
+                    <div>
+                        This is the viewer
+                        <hr/>
+                        <button onClick={this.props.switchMode}>Go to editor</button>
+                    </div>
+                );
+            }
+        }
+
+        class App extends React.Component{
+
+            constructor(props) {
+                super(props)
+            
+                this.state = {
+                  editor: true   
+                };
+            }
+            
+            switchMode = () => {
+                this.setState(state => ({
+                    editor: !state.editor
+                }))
+            }
+
+            render() {
+                if (this.state.editor) {
+                    return (
+                        <CardEditor switchMode={this.switchMode}/>
+                    );
+                } else {
+                    return (
+                        <CardViewer switchMode={this.switchMode}/>
+                    );
+                }
+            }
+        }
+
+        ReactDOM.render(<App/>, document.getElementById('app'));
+        </script>
+    </body>
+</html>
