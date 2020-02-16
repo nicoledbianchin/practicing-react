@@ -15,7 +15,21 @@
             }
             button {
                 border-style: solid;
-                border-color: black;
+                border-color: slategrey;
+            }
+            table, th, td {
+                border: 1px solid slategray;
+            }
+            table {
+                border-collapse: collapse;
+                border-width: 2px;
+                margin: auto;
+            }
+            th, td {
+                padding: 10px;
+            }
+            input {
+                margin: 10px;
             }
         </style>
     </header>
@@ -27,10 +41,49 @@
         
         class CardEditor extends React.Component{
 
+            constructor(props){
+                super(props);
+                this.state = {
+                    front = "",
+                    back = ""
+                }
+            }
+
+            handleChange = (event) => {
+                this.setState({
+                    [event.target.name]: event.target.value
+                })
+            }
+
             render() {
+
+            const rows = this.props.cards.map((card, i) => {
+                return (
+                    <tr key={i}>
+                        <td>{card.front}</td>
+                        <td>{card.back}</td>
+                        <td><button>Delete</button></td>
+                    </tr>
+                );
+            })
+
                 return (
                     <div>
-                        This is the editor
+                        <h2>Card editor</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Front</th>
+                                    <th>Back</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {rows}
+                            </tbody>
+                        </table>
+                        <input onChange={this.handleChange} name="front" placeholder="Front of the card" value={this.state.front}/>
+                        <input onChange={this.handleChange} name="back" placeholder="Back of the card" value={this.state.back}/>
                         <hr/>
                         <button onClick={this.props.switchMode}>Go to viewer</button>
                     </div>
@@ -58,7 +111,8 @@
             
                 this.state = {
                   editor: true,
-                  cards: []   
+                  cards: [{front: "test front", back: "test back"},
+                          {front: "test 2 front", back: "test 2 back"}]   
                 };
             }
             
