@@ -38,6 +38,9 @@
                                 count: parseInt(count)
                             });
                         }
+                        window.addEventListener("beforeunload", () => {
+                            localStorage.setItem("count", this.state.count)
+                        });
                     }
 
                     render() {
