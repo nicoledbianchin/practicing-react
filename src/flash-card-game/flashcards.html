@@ -57,7 +57,8 @@
                 super(props)
             
                 this.state = {
-                  editor: true   
+                  editor: true,
+                  cards: []   
                 };
             }
             
@@ -70,11 +71,15 @@
             render() {
                 if (this.state.editor) {
                     return (
-                        <CardEditor switchMode={this.switchMode}/>
+                        <CardEditor 
+                            cards={this.state.cards}  
+                            switchMode={this.switchMode}/>
                     );
                 } else {
                     return (
-                        <CardViewer switchMode={this.switchMode}/>
+                        <CardViewer 
+                        cards={this.state.cards} 
+                        switchMode={this.switchMode}/>
                     );
                 }
             }
