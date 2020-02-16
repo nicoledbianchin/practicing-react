@@ -9,11 +9,22 @@
             *{
                 text-align: center;
             }
+            body {
+                background: lightgray;
+            }
+            button {
+                background: #F4A460;
+                border-style: solid;
+                border-color: black;
+            }
+            ul {
+                list-style-type: none;
+            }
         </style>
     </header>
     <body>
         <div id="app">
-
+<!--display the number of tasks to do; delete task with a button, -->
         </div>
 
         <script type="text/babel">
@@ -24,7 +35,7 @@
                 super(props);
                 this.state = {
                     tasks: [],
-                    input: "",
+                    input: ""
                 };
             }
 
@@ -41,17 +52,30 @@
                 }));
             }
 
+            deleteTask = (index) => {
+                this.setState(state => {
+                    const tasks = [...state.tasks];
+                    tasks.splice(index, 1);
+                    return {
+                        tasks: tasks
+                    };
+                })
+            }
+
             render() {
                 return (
                     <div>
                         <h1>Tasks:</h1>
                             <ul>{this.state.tasks.map((task, i) => 
                                 <li key={i}>
+                                    <button onClick={() => this.deleteTask(i)}>Delete</button>    
                                     {task}
                                 </li>
                             )}
                         </ul>
+                        <p>Number of tasks to do: {this.state.tasks.length}</p>
                         <input onChange={this.handleChange} value={this.state.input}/>
+                        <br/>
                         <br/>
                         <button onClick={this.addTask}>Add task</button>
                     </div>
