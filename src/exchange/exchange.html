@@ -32,15 +32,29 @@
                     makeSelection = (event) => {
                         this.setState({
                             [event.target.name]: event.target.value
-                        })
+                        }, this.recalculate)
                     }
 
                     changeValue = (event) => {
                         this.setState({
                             value: event.target.value
-                        })
+                        }, this.recalculate)
                     }
 
+                    recalculate = () => {
+                        const value = parseFloat(this.state.value);
+                        if (isNaN(value)) {
+                            return;
+                        }
+
+                        fetch(`https://api.exchangeratesapi.io/latest?base=${this.state.base}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            this.setState({
+                                converted: data.rates[this.state.other] * value 
+                            });
+                        });
+                    }
 
                     render(){
                         return(
@@ -56,7 +70,7 @@
                                     <select onChange={this.makeSelection} name="other" value={this.state.other}>
                                         {this.currencies.map(currency => <option key={currency} value={currency}>{currency}</option>)}
                                     </select>
-                                    <input desabled={true} value={this.state.converted}/>
+                                    <input disabled={true} value={this.state.converted}/>
                                 </div>
                             </div>
                         );
