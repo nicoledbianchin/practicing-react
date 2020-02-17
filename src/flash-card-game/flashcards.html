@@ -39,6 +39,9 @@
                 height: 80px;
                 border: solid slategray;
             }
+            ol {
+                list-style-type: none;
+            }
         </style>
     </header>
     <body>
@@ -117,34 +120,28 @@
             
             constructor(props){
                 super(props);
-                const cards = props.cards;
                 const count = 0;
+                const front = null;
+                const  back = null;
             }
 
             getNextCard = () => {
                 this.setState(state =>({
+                    const card = this.props.getNextCard(this.count);
                     count: this.state.count + 1
                 }));
             }
 
             render() {
 
-                const cardList = this.props.cards.map((card, i) => {
-                return (
-                    <tr key={i}>
-                        <td>{card}</td>
-                        <td><button data-index={i} onClick={this.getNextCard}>Next card</button></td>
-                    </tr>
-                );
-            })
-
                 return (
                     <div>
                         <h1>Card viewer</h1>
                         <div>
-                            <h2>{cardList}</h2>
+                            <h2>{}</h2>
                         </div>
                         <hr/>
+                        <button onClick={this.getNextCard}>Next card</button>
                         <button onClick={this.props.switchMode}>Go to editor</button>
                     </div>
                 );
@@ -158,7 +155,8 @@
             
                 this.state = {
                   editor: true,
-                  cards: []   
+                  cards: [],
+                  card: null  
                 };
             }
             
@@ -184,6 +182,16 @@
                 })
             }
 
+            getNextCard = (index) => {
+                this.setState(state => {
+                    const cards = [...state.cards];
+                    card = cards.splice(index, 1);
+                    return {
+                        card
+                    }
+                })
+            }
+
             render() {
                 if (this.state.editor) {
                     return (
@@ -197,7 +205,8 @@
                     return (
                         <CardViewer 
                         cards={this.state.cards} 
-                        switchMode={this.switchMode}/>
+                        switchMode={this.switchMode}
+                        getNextCard={this.getNextCard}/>
                     );
                 }
             }
