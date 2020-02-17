@@ -37,7 +37,8 @@
 
                     changeValue = (event) => {
                         this.setState({
-                            value: event.target.value
+                            value: event.target.value,
+                            converted: null
                         }, this.recalculate)
                     }
 
@@ -70,7 +71,7 @@
                                     <select onChange={this.makeSelection} name="other" value={this.state.other}>
                                         {this.currencies.map(currency => <option key={currency} value={currency}>{currency}</option>)}
                                     </select>
-                                    <input disabled={true} value={this.state.converted}/>
+                                    <input disabled={true} value={this.state.converted === null ? "Calculating..." : this.state.converted}/>
                                 </div>
                             </div>
                         );
