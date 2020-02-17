@@ -120,16 +120,24 @@
             
             constructor(props){
                 super(props);
-                const count = 0;
-                const front = null;
-                const  back = null;
+                this.state = {
+                    count: 0,
+                    card: null,
+                    front: null,
+                    back: null
+                }
             }
 
             getNextCard = () => {
-                this.setState(state =>({
+                this.setState(state =>{
                     const card = this.props.getNextCard(this.count);
-                    count: this.state.count + 1
-                }));
+                    count: this.state.count + 1;
+                    front: card.front;
+                    back: card.back
+                });
+                return {
+                    front
+                }
             }
 
             render() {
@@ -185,11 +193,11 @@
             getNextCard = (index) => {
                 this.setState(state => {
                     const cards = [...state.cards];
-                    card = cards.splice(index, 1);
+                    const card = this.cards.splice(index, 1);
                     return {
-                        card
+                        card: card
                     }
-                })
+                });
             }
 
             render() {
