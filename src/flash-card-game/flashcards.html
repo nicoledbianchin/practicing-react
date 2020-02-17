@@ -32,6 +32,13 @@
             input {
                 margin: 10px;
             }
+            h2 {
+                width: 400px;
+                margin: auto;
+                padding-top: 60px;
+                height: 80px;
+                border: solid slategray;
+            }
         </style>
     </header>
     <body>
@@ -82,7 +89,7 @@
 
                 return (
                     <div>
-                        <h2>Card editor</h2>
+                        <h1>Card editor</h1>
                         <table>
                             <thead>
                                 <tr>
@@ -108,10 +115,35 @@
 
         class CardViewer extends React.Component{
             
+            constructor(props){
+                super(props);
+                const cards = props.cards;
+                const count = 0;
+            }
+
+            getNextCard = () => {
+                this.setState(state =>({
+                    count: this.state.count + 1
+                }));
+            }
+
             render() {
+
+                const cardList = this.props.cards.map((card, i) => {
+                return (
+                    <tr key={i}>
+                        <td>{card}</td>
+                        <td><button data-index={i} onClick={this.getNextCard}>Next card</button></td>
+                    </tr>
+                );
+            })
+
                 return (
                     <div>
-                        This is the viewer
+                        <h1>Card viewer</h1>
+                        <div>
+                            <h2>{cardList}</h2>
+                        </div>
                         <hr/>
                         <button onClick={this.props.switchMode}>Go to editor</button>
                     </div>
