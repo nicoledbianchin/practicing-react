@@ -48,20 +48,10 @@
                             return;
                         }
 
-                        if (this.cached[this.state.base] !== undefined && Date.now() - this.cached[this.state.base].timestamp < 60000) {
-                            this.setState({
-                                converted: this.cached[this.state.base].rates[this.state.other] * value
-                            });
-                            return;      
-                        }
 
                         fetch(`https://api.exchangeratesapi.io/latest?base=${this.state.base}`)
                         .then(response => response.json())
-                        .then(data => {
-                            this.cached[this.state.base] = {
-                                rates: data.rates,
-                                timestamp: Date.now()
-                            };
+                        .then(data => { 
                             this.setState({
                                 converted: data.rates[this.state.other] * value 
                             });
